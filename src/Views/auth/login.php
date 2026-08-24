@@ -11,7 +11,7 @@
 
     <h1>Login</h1>
 
-    <form method="POST" action="/portfolio/public/login">
+    <form method="POST" action="/portfolio-php/public/login">
 
         <div>
             <label for="email">Email</label>

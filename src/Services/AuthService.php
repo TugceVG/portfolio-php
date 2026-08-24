@@ -17,7 +17,7 @@ class AuthService
             return false;
         }
 
-        if ($user['password'] !== $password) {
+        if (!password_verify($password, $user['password'])) {
             return false;
         }
 
