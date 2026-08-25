@@ -16,19 +16,31 @@ class LoginController
 
     public function authenticate()
     {
+
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
 
-         $authenticated = $this->authService->authenticate(
+         $authenticatedUser = $this->authService->authenticate(
             $email,
             $password
         );
 
-        if ($authenticated) {
-            echo "Login successful";
-            return;
+        if ($authenticatedUser) {
+            $_SESSION['user_id'] = $authenticatedUser['id'];
+            header('Location: /portfolio-php/public/');
+            exit;
         }
 
         echo "Invalid email or password";
+    }
+
+    public function logout()
+    {
+        session_start();
+
+        unset($_SESSION['user_id']);
+
+        header('Location: /portfolio-php/public/login');
+        exit;
     }
 }

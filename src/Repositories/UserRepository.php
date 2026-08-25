@@ -20,4 +20,20 @@ class UserRepository
 
         return $user;
     }
+
+    public function findById(int $id)
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT * FROM users WHERE id = :id"
+        );
+
+        $stmt->execute(['id'=>$id]);
+        $user = $stmt->fetch();
+
+        if ($user === false) {
+        return null;
+}
+
+        return $user;
+    }
 }

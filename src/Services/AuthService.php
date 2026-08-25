@@ -9,18 +9,18 @@ class AuthService
         $this->userRepository = $userRepository;
     }
 
-    public function authenticate(string $email, string $password): bool
+    public function authenticate(string $email, string $password): null | array
     {
         $user = $this->userRepository->findByEmail($email);
 
         if ($user === null) {
-            return false;
+            return null;
         }
 
         if (!password_verify($password, $user['password'])) {
-            return false;
+            return null;
         }
 
-        return true;
+        return $user;
     }
 }

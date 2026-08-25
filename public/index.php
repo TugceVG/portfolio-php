@@ -11,12 +11,14 @@ require_once __DIR__ . '/../src/Controllers/HomeController.php';
 require_once __DIR__ . '/../src/Database.php';
 
 $router = new Router();
-$homeController = new HomeController();
 $db = new Database();
 $pdo = $db->getConnection();
 $userRepository = new UserRepository($pdo);
+$homeController = new HomeController($userRepository);
 $authService = new AuthService($userRepository);
 $loginController = new LoginController($authService);
+
+session_start();
 
 $router->get('/', function () use ($homeController) {
     $homeController->home();
@@ -32,6 +34,10 @@ $router->post('/login', function () use ($loginController) {
 
 $router->get('/test', function () {
     echo "Test route çalıştı!";
+});
+
+$router->get('/logout', function () use ($loginController) {
+    $loginController->logout();
 });
 
 $router->dispatch();
